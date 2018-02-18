@@ -1,0 +1,45 @@
+[
+    {
+        "id": "/subscriptions/7c326b71-55e3-4ca7-8372-8227e1354e4c/resourceGroups/IBM-GSL-Broker-Project/providers/Microsoft.Storage/storageAccounts/saketsa",
+        "name": "saketsa",
+        "type": "Microsoft.Storage/storageAccounts",
+        "location": "eastus",
+        "tags": {},
+        "sku": {
+            "name": "Standard_LRS",
+            "tier": "Standard"
+        },
+        "kind": "StorageV2",
+        "provisioningState": "Succeeded",
+        "primaryEndpoints": {
+            "blob": "https://saketsa.blob.core.windows.net/",
+            "queue": "https://saketsa.queue.core.windows.net/",
+            "table": "https://saketsa.table.core.windows.net/",
+            "file": "https://saketsa.file.core.windows.net/"
+        },
+        "primaryLocation": "eastus",
+        "statusOfPrimary": "available",
+        "creationTime": "2018-02-16T17:17:48.945Z",
+        "encryption": {
+            "services": {
+                "blob": {
+                    "enabled": true,
+                    "lastEnabledTime": "2018-02-16T17:17:49.070Z"
+                },
+                "file": {
+                    "enabled": true,
+                    "lastEnabledTime": "2018-02-16T17:17:49.070Z"
+                }
+            },
+            "keySource": "Microsoft.Storage"
+        },
+        "accessTier": "Cool",
+        "enableHttpsTrafficOnly": false,
+        "networkRuleSet": {
+            "bypass": "AzureServices",
+            "virtualNetworkRules": [],
+            "ipRules": [],
+            "defaultAction": "Allow"
+        }
+    }
+]

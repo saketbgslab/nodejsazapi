@@ -1,0 +1,17 @@
+{
+  "name": "nodejsazapi",
+  "version": "1.0.0",
+  "description": "node js api",
+  "main": "index.js",
+  "dependencies": {
+    "azure-arm-resource": "^3.1.0-preview",
+    "azure-arm-storage": "^3.2.0",
+    "ms-rest-azure": "^2.5.3"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Saket",
+  "license": "ISC"
+}

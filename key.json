@@ -1,0 +1,14 @@
+{
+    "keys": [
+        {
+            "keyName": "key1",
+            "value": "ZVncXaQ3G0OS9RhUivT1LDr2Wb6yzhrIgXjwydE86x2OeqPEtyP7eacjjoWrB3H9nLuaYueHdaEEyzCL2sQtSQ==",
+            "permissions": "FULL"
+        },
+        {
+            "keyName": "key2",
+            "value": "BiqhQOXoftdpbbY4DSV5CwMPozBjJkoOmdaPUfdWf/EDGo261FzO8gCNZ+OJDV+faj/0DddwX3TcYM/hqd/SbA==",
+            "permissions": "FULL"
+        }
+    ]
+}
