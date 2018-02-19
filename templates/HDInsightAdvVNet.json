@@ -1,7 +1,7 @@
 {
     "$schema": "http://schema.management.azure.com/schemas/2014-04-01-preview/deploymentTemplate.json#",
     "contentVersion": "0.9.0.0",
-    "parameters":{
+    "parameters": {
         "clusterName": {
             "type": "string",
             "metadata": {
@@ -23,7 +23,7 @@
         },
         "location": {
             "type": "string",
-            "defaultValue": "[resourceGroup().location]",
+            "defaultValue": "eastus",
             "metadata": {
                 "description": "The location where all azure resources will be deployed."
             }
@@ -33,6 +33,13 @@
             "defaultValue": "3.6",
             "metadata": {
                 "description": "HDInsight cluster version."
+            }
+        },
+        "clusterWorkerNodeCount": {
+            "type": "int",
+            "defaultValue": 1,
+            "metadata": {
+                "description": "The number of nodes in the HDInsight cluster."
             }
         },
         "clusterKind": {
@@ -54,103 +61,18 @@
             "metadata": {
                 "description": "The password must be at least 10 characters in length and must contain at least one digit, one non-alphanumeric character, and one upper or lower case letter."
             }
-        },
-
-        "storageAccNewOrExisting":{
-            "type": "string",
-            "allowedValues": [
-                "new",
-                "existing"
-            ],
-            "metadata": {
-                "description":"The value should be new if wants to create a new storage account"
-            }
-        },
-
-        "storageAccountName":{
-            "type": "string",
-            "metadata": {
-                "description": "The name of the storage account linked with cluster"
-            }
-        },
-
-        "storageAccountkind":{
-            "type": "string",
-            "defaultValue": "Storage",
-            "metadata": {
-                "description":"type of storage account"
-            },
-            "allowedValues": [
-                "Storage",
-                "StorageV2",
-                "BlobStorage"
-            ]
-        },
-
-        
-
-        "storageAccountType":{
-            "type": "string",
-            "defaultValue": "Standard_LRS",
-            "metadata": {
-                "description":"Replication type of storage account to be created "
-            },
-            "allowedValues": [
-                "Standard_ZRS",
-                "Standard_LRS",
-                "Standard_GRS",
-                "Standard_RAGRS"
-            ]
-        },
-
-        "nodeVmSize":{
-            "type": "string",
-            "defaultValue": "Standard_D12_V2",
-            "metadata": {
-                "description": "Size of VMs of nodes"
-            }
-        },
-
-        "workerNodeInstanceCount":{
-            "type": "int",
-            "defaultValue": 3,
-            "metadata": {
-                "description":"Max VM instances to be created on the worker node"
-            }
         }
     },
-
-    "variables": {
-      "nodeOsType": "Linux",
-      "blobURI": ".blob.core.windows.net"
-    },
-
     "resources": [
-
-        {
-            "condition": "[equals(parameters('storageAccNewOrExisting'),'new')]",
-            "type": "Microsoft.Storage/storageAccounts",
-            "name": "[parameters('storageAccountName')]",
-            "apiVersion": "2017-06-01",
-            "location": "[resourceGroup().location]",
-            "sku": {
-                "name": "[parameters('storageAccountType')]"
-            },
-            "kind": "[parameters('storageAccountkind')]",
-            "properties": {}
-        },
-
         {
             "apiVersion": "2015-03-01-preview",
             "name": "[parameters('clusterName')]",
             "type": "Microsoft.HDInsight/clusters",
             "location": "[parameters('location')]",
-            "dependsOn": [
-                "[resourceId('Microsoft.Storage/storageAccounts',parameters('storageAccountName'))]"
-            ],
+            "dependsOn": [],
             "properties": {
                 "clusterVersion": "[parameters('clusterVersion')]",
-                "osType": "[variables('nodeOsType')]",
+                "osType": "Linux",
                 "tier": "standard",
                 "clusterDefinition": {
                     "kind": "[parameters('clusterKind')]",
@@ -165,10 +87,10 @@
                 "storageProfile": {
                     "storageaccounts": [
                         {
-                            "name": "[concat(parameters('storageAccountName'),variables('blobURI'))]",
+                            "name": "saket6.blob.core.windows.net",
                             "isDefault": true,
-                            "container": "[concat(parameters('clusterName'), uniqueString(resourceGroup().id))]",
-                            "key": "[listKeys(resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccountName')), providers('Microsoft.Storage', 'storageAccounts').apiVersions[0]).keys[0].value]"
+                            "container": "saketcluster-2018-02-19t09-50-06-212z",
+                            "key": "[listKeys('/subscriptions/7c326b71-55e3-4ca7-8372-8227e1354e4c/resourceGroups/IBM-GSL-Broker-Project/providers/Microsoft.Storage/storageAccounts/saket6', '2015-05-01-preview').key1]"
                         }
                     ]
                 },
@@ -179,7 +101,7 @@
                             "minInstanceCount": 1,
                             "targetInstanceCount": 2,
                             "hardwareProfile": {
-                                "vmSize": "[parameters('nodeVmSize')]"
+                                "vmSize": "Large"
                             },
                             "osProfile": {
                                 "linuxOperatingSystemProfile": {
@@ -187,15 +109,18 @@
                                     "password": "[parameters('sshPassword')]"
                                 }
                             },
-                            "virtualNetworkProfile": null,
+                            "virtualNetworkProfile": {
+                                "id": "/subscriptions/7c326b71-55e3-4ca7-8372-8227e1354e4c/resourceGroups/IBM-GSL-Broker-Project/providers/Microsoft.Network/virtualNetworks/my-instancevnet",
+                                "subnet": "/subscriptions/7c326b71-55e3-4ca7-8372-8227e1354e4c/resourceGroups/IBM-GSL-Broker-Project/providers/Microsoft.Network/virtualNetworks/my-instancevnet/subnets/default"
+                            },
                             "scriptActions": []
                         },
                         {
                             "name": "workernode",
                             "minInstanceCount": 1,
-                            "targetInstanceCount": "[parameters('workerNodeInstanceCount')]",
+                            "targetInstanceCount": 1,
                             "hardwareProfile": {
-                                "vmSize": "[parameters('nodeVmSize')]"
+                                "vmSize": "Large"
                             },
                             "osProfile": {
                                 "linuxOperatingSystemProfile": {
@@ -203,7 +128,10 @@
                                     "password": "[parameters('sshPassword')]"
                                 }
                             },
-                            "virtualNetworkProfile": null,
+                            "virtualNetworkProfile": {
+                                "id": "/subscriptions/7c326b71-55e3-4ca7-8372-8227e1354e4c/resourceGroups/IBM-GSL-Broker-Project/providers/Microsoft.Network/virtualNetworks/my-instancevnet",
+                                "subnet": "/subscriptions/7c326b71-55e3-4ca7-8372-8227e1354e4c/resourceGroups/IBM-GSL-Broker-Project/providers/Microsoft.Network/virtualNetworks/my-instancevnet/subnets/default"
+                            },
                             "scriptActions": []
                         },
                         {
@@ -219,18 +147,15 @@
                                     "password": "[parameters('sshPassword')]"
                                 }
                             },
-                            "virtualNetworkProfile": null,
+                            "virtualNetworkProfile": {
+                                "id": "/subscriptions/7c326b71-55e3-4ca7-8372-8227e1354e4c/resourceGroups/IBM-GSL-Broker-Project/providers/Microsoft.Network/virtualNetworks/my-instancevnet",
+                                "subnet": "/subscriptions/7c326b71-55e3-4ca7-8372-8227e1354e4c/resourceGroups/IBM-GSL-Broker-Project/providers/Microsoft.Network/virtualNetworks/my-instancevnet/subnets/default"
+                            },
                             "scriptActions": []
                         }
                     ]
                 }
             }
         }
-    ],
-
-    "outputs": {
-        
-    }
-
+    ]
 }
-
