@@ -1,14 +1,14 @@
-import { request } from 'https';
-
 //const Azure = require('azure');
 const MsRest = require('ms-rest-azure');
 const azconfig = require('./azconfig').loginConfig;
-var parameters = require('./templates/myHDInsightParameters').parameters;
+var parameters = require('./templates/myHDInsightParameters');
 var fs = require('fs');
 var util = require('util');
 var path = require('path');
 var ResourceManagementClient = require('azure-arm-resource').ResourceManagementClient;
 var StorageManagementClient = require('azure-arm-storage');
+var ComputeManagementClient = require('azure-arm-compute');
+var VirtualMachineSizes = require('azure-arm-compute').VirtualMachineSizes;
 
 //_________________CONFIG_______________________________________________
 var clientId = azconfig.clientId;
@@ -30,9 +30,22 @@ function startExec(err, credentials){
     storageClient = new StorageManagementClient(credentials, subscriptionId);
     resourceClient = new ResourceManagementClient(credentials, subscriptionId);
 
-    loadTemplateAndDeploy();
+    //__________COMPUTE CLIENT FOR VM SIZES________________________________
+    computeClient = new ComputeManagementClient(credentials, subscriptionId);
+    console.log('\n\n\t NODE JS NGKSJDNKN'+ JSON.stringify(parameters, 0, 4))
+
+    computeServives();
+//    loadTemplateAndDeploy();
 }
 
+//--------------------COMPUTE SERVICES------------------------------------------
+function computeServives()
+{
+  computeClient.virtualMachineSizes.list('eastus', afterDeployment);
+}
+
+
+//--------------template deployment------------------------------------
 function loadTemplateAndDeploy(){
     try {
         var templateFilePath = path.join(__dirname, "templates/myHDInsight.json");
@@ -69,7 +82,7 @@ function afterDeployment(err, result, request, response) {
     }
     else{
         console.log(result);
-        fs.writeFileSync('./HDDeplouresult.json', JSON.stringify(result, 0,4), 'utf-8');
+        fs.writeFileSync('./listOfVmSizes.json', JSON.stringify(result, 0,4), 'utf-8');
     }
    // callback(null, result);
   }

@@ -7,6 +7,7 @@ parameters.storageAccountName= {}
 
 parameters.clusterName.value = "saketcluster2";
 parameters.clusterLoginPassword.value = "S@ketbarwal1"
+parameters.storageAccNewOrExisting.value = "existing"
 parameters.sshPassword.value = "S@ketbarwal1"
 parameters.storageAccountName.value = "saket1234"
 
