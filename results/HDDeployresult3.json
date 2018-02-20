@@ -1,0 +1,99 @@
+{
+    "id": "/subscriptions/7c326b71-55e3-4ca7-8372-8227e1354e4c/resourceGroups/IBM-GSL-Broker-Project/providers/Microsoft.Resources/deployments/saketClusterNodeApi",
+    "name": "saketClusterNodeApi",
+    "properties": {
+        "provisioningState": "Succeeded",
+        "correlationId": "9220a741-c590-4751-a4bf-af22b843b950",
+        "timestamp": "2018-02-20T09:16:51.243Z",
+        "outputs": {},
+        "providers": [
+            {
+                "namespace": "Microsoft.HDInsight",
+                "resourceTypes": [
+                    {
+                        "resourceType": "clusters",
+                        "locations": [
+                            "eastus"
+                        ]
+                    }
+                ]
+            }
+        ],
+        "dependencies": [
+            {
+                "dependsOn": [
+                    {
+                        "id": "/subscriptions/7c326b71-55e3-4ca7-8372-8227e1354e4c/resourceGroups/IBM-GSL-Broker-Project/providers/Microsoft.Storage/storageAccounts/saketsa1",
+                        "resourceType": "Microsoft.Storage/storageAccounts",
+                        "resourceName": "saketsa1"
+                    },
+                    {
+                        "id": "/subscriptions/7c326b71-55e3-4ca7-8372-8227e1354e4c/resourceGroups/IBM-GSL-Broker-Project/providers/Microsoft.Storage/storageAccounts/saketsa1",
+                        "resourceType": "Microsoft.Storage/storageAccounts",
+                        "resourceName": "saketsa1"
+                    }
+                ],
+                "id": "/subscriptions/7c326b71-55e3-4ca7-8372-8227e1354e4c/resourceGroups/IBM-GSL-Broker-Project/providers/Microsoft.HDInsight/clusters/saketcluster2",
+                "resourceType": "Microsoft.HDInsight/clusters",
+                "resourceName": "saketcluster2"
+            }
+        ],
+        "parameters": {
+            "clusterName": {
+                "type": "String",
+                "value": "saketcluster2"
+            },
+            "clusterLoginUserName": {
+                "type": "String",
+                "value": "admin"
+            },
+            "clusterLoginPassword": {
+                "type": "SecureString"
+            },
+            "location": {
+                "type": "String",
+                "value": "eastus"
+            },
+            "clusterVersion": {
+                "type": "String",
+                "value": "3.6"
+            },
+            "clusterKind": {
+                "type": "String",
+                "value": "HADOOP"
+            },
+            "sshUserName": {
+                "type": "String",
+                "value": "sshuser"
+            },
+            "sshPassword": {
+                "type": "SecureString"
+            },
+            "storageAccNewOrExisting": {
+                "type": "String",
+                "value": "existing"
+            },
+            "storageAccountName": {
+                "type": "String",
+                "value": "saketsa1"
+            },
+            "storageAccountkind": {
+                "type": "String",
+                "value": "Storage"
+            },
+            "storageAccountType": {
+                "type": "String",
+                "value": "Standard_LRS"
+            },
+            "nodeVmSize": {
+                "type": "String",
+                "value": "Standard_D12_V2"
+            },
+            "workerNodeInstanceCount": {
+                "type": "Int",
+                "value": 3
+            }
+        },
+        "mode": "Incremental"
+    }
+}

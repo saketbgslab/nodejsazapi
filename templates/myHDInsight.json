@@ -87,8 +87,6 @@
             ]
         },
 
-        
-
         "storageAccountType":{
             "type": "string",
             "defaultValue": "Standard_LRS",
@@ -126,7 +124,6 @@
     },
 
     "resources": [
-
         {
             "condition": "[equals(parameters('storageAccNewOrExisting'),'new')]",
             "type": "Microsoft.Storage/storageAccounts",
@@ -227,9 +224,8 @@
             }
         }
     ],
-
+    
     "outputs": {
-        
     }
 
 }
