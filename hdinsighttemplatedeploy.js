@@ -1,11 +1,12 @@
 //const Azure = require('azure');
 const MsRest = require('ms-rest-azure');
-const azconfig = require('./azconfig').loginConfig;
+const config = require('./azconfig');
 var parameters = require('./myHDInsightParameters');
 var fs = require('fs');
 var util = require('util');
 var path = require('path');
 var ResourceManagementClient = require('azure-arm-resource').ResourceManagementClient;
+var SubscriptionManagementClient = require('azure-arm-resource').SubscriptionClient;
 var StorageManagementClient = require('azure-arm-storage');
 var ComputeManagementClient = require('azure-arm-compute');
 var VirtualMachineSizes = require('azure-arm-compute').VirtualMachineSizes;
@@ -13,16 +14,17 @@ var VirtualMachineSizes = require('azure-arm-compute').VirtualMachineSizes;
 var storageservices = require('./services/storageServices');
 var computeServives = require('./services/computeServices');
 var resourceManagementServices = require('./services/resourceManagementServices');
-
+var subscriptionManagementServices = require('./services/subscriptionManagementServices');
 
 //_________________CONFIG_______________________________________________
-var clientId = azconfig.clientId;
-var domain  = azconfig.domain;
-var secret   = azconfig.secret;
-var subscriptionId  = azconfig.subscriptionId;
-var resourceGroupName = azconfig.resourceGroupName;
-var res = azconfig.storageAccount ;
+var clientId = config.loginConfig.clientId;
+var domain  = config.loginConfig.domain;
+var secret   = config.loginConfig.secret;
+var subscriptionId  = config.loginConfig.subscriptionId;
+var resourceGroupName = config.loginConfig.resourceGroupName;
+var res = config.loginConfig.storageAccount ;
 var deploymentName= 'saketClusterNodeApi';
+var baseURI = config.baseURI;
 //_________________CONFIG_______________________________________________
 
 
@@ -32,8 +34,12 @@ MsRest.loginWithServicePrincipalSecret(clientId, secret, domain, startExec );
 function startExec(err, credentials){
     if(err) return console.error(err)
 
+    subscriptionClient = new SubscriptionManagementClient(credentials,baseURI ,callback);
+    subscriptionClient.subscriptions.list(callback);
+
     storageClient = new StorageManagementClient(credentials, subscriptionId);
     resourceClient = new ResourceManagementClient(credentials, subscriptionId);
+    //resourceClient.resourceGroups.list(callback);
     computeClient = new ComputeManagementClient(credentials, subscriptionId);
 
     callservices();
@@ -43,11 +49,12 @@ function startExec(err, credentials){
 
 //_______SERVICES TESTING___________________
 function callservices(){
-  computeServives.listVMSizes();
-  computeServives.refreshVmSizesList(computeClient, 'eastus');
+ // computeServives.listVMSizes();
+//  computeServives.refreshVmSizesList(computeClient, 'eastus');
   
-  storageservices.listStorageAccounts(storageClient, storageListCallback);
+  //storageservices.listStorageAccounts(storageClient, storageListCallback);
 
+  subscriptionManagementServices.getsubscriptionLocationsList(subscriptionClient,subscriptionId)
   var deploymentDetails = {};
   deploymentDetails.resourceGroupName = resourceGroupName;
   deploymentDetails.deploymentName = deploymentName;
@@ -55,7 +62,7 @@ function callservices(){
   deploymentDetails.templateName = "myHDInsight.json";
   deploymentDetails.parameters = parameters;
 
-  resourceManagementServices.loadTemplateAndDeploy(resourceClient, deploymentDetails);
+ // resourceManagementServices.loadTemplateAndDeploy(resourceClient, deploymentDetails);
 }
 
 //_______SERVICES TESTING___________________
@@ -84,3 +91,13 @@ function afterDeployment(err, result, request, response) {
         fs.writeFileSync('./HDDeployresult2.json', JSON.stringify(result, 0,4), 'utf-8');
     }
   }
+
+function callback(err, result, request, response) {
+  if (err) {
+    console.error('\nERROR:' + err);
+  }
+  else{
+      console.log(result);
+      fs.writeFileSync('./results/listOfSubscriptionsLocation.json', JSON.stringify(result, 0,4), 'utf-8');
+    }
+}

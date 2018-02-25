@@ -9,7 +9,8 @@ var path = require('path');
 function listVMSizes(){
     try{
         var vmSizeFilePath = path.join(__dirname, "../listOfVmSizes.json");
-        var listOfVmSizes = JSON.parse(fs.readFileSync(vmSizeFilePath, 'utf8'));    
+        var listOfVmSizes = JSON.parse(fs.readFileSync(vmSizeFilePath, 'utf8'));
+        console.log(listOfVmSizes[0].name)
     } catch (ex) {
        return  console.error('\n\t List of VM sizes file read error: ' + err);
     }
@@ -32,7 +33,7 @@ function refreshVmSizesList(computeClient, location){
         }
         else{
             console.log('\n Fetched List of VM Sizes!');
-            fs.writeFileSync('./listOfVmSizes.json', JSON.stringify(result, 0,4), 'utf-8');
+            fs.writeFileSync('./results/listOfVmSizes.json', JSON.stringify(result, 0,4), 'utf-8');
             console.log('\n listOfVmSizes.json is now updated')
         }
        // callback(null, result);

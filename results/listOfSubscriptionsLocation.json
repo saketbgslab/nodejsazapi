@@ -1,0 +1,14 @@
+[
+    {
+        "id": "/subscriptions/7c326b71-55e3-4ca7-8372-8227e1354e4c",
+        "subscriptionId": "7c326b71-55e3-4ca7-8372-8227e1354e4c",
+        "displayName": "Pay-As-You-Go",
+        "state": "Enabled",
+        "subscriptionPolicies": {
+            "locationPlacementId": "PublicAndIndia_2015-09-01",
+            "quotaId": "PayAsYouGo_2014-09-01",
+            "spendingLimit": "Off"
+        },
+        "authorizationSource": "RoleBased"
+    }
+]

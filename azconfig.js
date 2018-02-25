@@ -6,5 +6,6 @@ config.loginConfig.domain  = "0a862cff-4880-4f48-9eeb-227ac6005671";
 config.loginConfig.secret  = "mSBHVMK9KqrFSHs819CXfk6xJQlEkx0UwEpStB8GXpg=";
 config.loginConfig.subscriptionId = "7c326b71-55e3-4ca7-8372-8227e1354e4c";
 config.loginConfig.resourceGroupName = "IBM-GSL-Broker-Project";
+config.baseURI = "https://management.azure.com/";
 
 module.exports = config;
