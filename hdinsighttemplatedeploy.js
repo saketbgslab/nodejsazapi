@@ -35,7 +35,7 @@ function startExec(err, credentials){
     if(err) return console.error(err)
 
     subscriptionClient = new SubscriptionManagementClient(credentials,baseURI ,callback);
-    subscriptionClient.subscriptions.list(callback);
+    //subscriptionClient.subscriptions.list(callback);
 
     storageClient = new StorageManagementClient(credentials, subscriptionId);
     resourceClient = new ResourceManagementClient(credentials, subscriptionId);
@@ -47,14 +47,17 @@ function startExec(err, credentials){
 
 
 
-//_______SERVICES TESTING___________________
+//_______SERVICES TESTIN
 function callservices(){
  // computeServives.listVMSizes();
 //  computeServives.refreshVmSizesList(computeClient, 'eastus');
   
   //storageservices.listStorageAccounts(storageClient, storageListCallback);
+ // storageservices.validateAccountName(storageClient, 'saketsa');
 
-  subscriptionManagementServices.getsubscriptionLocationsList(subscriptionClient,subscriptionId)
+//  subscriptionManagementServices.getsubscriptionLocationsList(subscriptionClient,subscriptionId)
+//  subscriptionManagementServices.getsubscriptionList(subscriptionClient, subscriptionCallback);
+
   var deploymentDetails = {};
   deploymentDetails.resourceGroupName = resourceGroupName;
   deploymentDetails.deploymentName = deploymentName;
@@ -62,7 +65,7 @@ function callservices(){
   deploymentDetails.templateName = "myHDInsight.json";
   deploymentDetails.parameters = parameters;
 
- // resourceManagementServices.loadTemplateAndDeploy(resourceClient, deploymentDetails);
+  resourceManagementServices.loadTemplateAndDeploy(resourceClient, deploymentDetails);
 }
 
 //_______SERVICES TESTING___________________
@@ -92,6 +95,16 @@ function afterDeployment(err, result, request, response) {
     }
   }
 
+function subscriptionCallback(err, result,request, response){
+  if (err) {
+    console.error('\nSubscription Callback ERROR:' + err);
+  }
+  else{
+      console.log(result);
+      fs.writeFileSync('./results/listOfSubscriptions.json', JSON.stringify(result, 0,4), 'utf-8');
+    }
+}
+
 function callback(err, result, request, response) {
   if (err) {
     console.error('\nERROR:' + err);
@@ -101,3 +114,4 @@ function callback(err, result, request, response) {
       fs.writeFileSync('./results/listOfSubscriptionsLocation.json', JSON.stringify(result, 0,4), 'utf-8');
     }
 }
+

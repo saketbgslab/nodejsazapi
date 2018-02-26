@@ -1,3 +1,6 @@
+var fs = require('fs');
+var path = require('path');
+var util = require('util')
 
 /*
     list of storage accounts in the subscription
@@ -14,4 +17,21 @@ function listStorageAccounts(storageClient, functionCallback){
     return storageClient.storageAccounts.list(functionCallback);
 }
 
+/*
+
+
+*/
+function validateAccountName(storageClient,accountName){
+storageClient.storageAccounts.checkNameAvailability(accountName, function(err, result, request, response) {
+            if (err) {
+            console.error('\checkNameAvailability ERROR:' + err);
+            }
+            else{
+                console.log(result);
+                fs.writeFileSync('./results/nameAvailability.json', JSON.stringify(result, 0,4), 'utf-8');
+            }
+        });
+}
+
 module.exports.listStorageAccounts = listStorageAccounts;
+module.exports.validateAccountName = validateAccountName;

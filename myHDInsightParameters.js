@@ -9,6 +9,6 @@ parameters.clusterName.value = "saketcluster2";
 parameters.clusterLoginPassword.value = "S@ketbarwal1"
 parameters.storageAccNewOrExisting.value = "existing"
 parameters.sshPassword.value = "S@ketbarwal1"
-parameters.storageAccountName.value = "saketsa1"
+parameters.storageAccountName.value = "saketsa"
 
 module.exports = parameters;

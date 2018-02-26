@@ -1,0 +1,5 @@
+{
+    "nameAvailable": false,
+    "reason": "AlreadyExists",
+    "message": "The storage account named saketsa is already taken."
+}
