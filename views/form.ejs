@@ -1,0 +1,27 @@
+
+<body>
+    <h1><%= topicHead %></h1>
+    <form name="form1" method="POST" action="/student/add">
+    <table>
+        <% Object.keys(parameters).forEach(function(key){ %>
+            <tr>
+                <td><%= key %></td>
+                <td><input type="text" name="<%= key %>" value="<%= getDefaultValue(key)%>" ></td>
+                </tr>
+        <% }) %>
+        <tr>
+        <td colspan="2"><input type="submit" value="Save" ></td>
+        </tr>
+    </table>
+    </form>   
+    
+</body>
+
+<%
+function getDefaultValue(key){
+    if(parameters[key].defaultValue == 'undefined'){
+        return ''
+    }
+    return (parameters[key].defaultValue)
+}
+%>

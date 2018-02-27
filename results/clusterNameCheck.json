@@ -72,14 +72,14 @@
                     }
                 ]
             },
-            "provisioningState": "InProgress",
+            "provisioningState": "Succeeded",
             "createdDate": "2018-02-27T06:24:04.75",
-            "clusterState": "ClusterStorageConfiguration",
+            "clusterState": "Running",
             "quotaInfo": {
                 "coresUsed": 40
             }
         }
     },
     "statusCode": 200,
-    "requestId": "34fe2118-48ca-42ba-8db9-58413e7f3c5f"
+    "requestId": "8b94cbeb-725d-430b-87da-68ef82992791"
 }

@@ -1,11 +1,8 @@
 {
-    "id": "/subscriptions/7c326b71-55e3-4ca7-8372-8227e1354e4c/resourceGroups/IBM-GSL-Broker-Project/providers/Microsoft.Resources/deployments/saketDeploy",
-    "name": "saketDeploy",
     "properties": {
         "provisioningState": "Succeeded",
-        "correlationId": "786b425b-ee41-48e4-859d-94e10f04ce1e",
-        "timestamp": "2018-02-20T07:43:19.772Z",
-        "outputs": {},
+        "correlationId": "c9c7102a-ad92-4478-9411-027f06efd735",
+        "timestamp": "2018-02-26T13:48:19.640Z",
         "providers": [
             {
                 "namespace": "Microsoft.HDInsight",
@@ -23,14 +20,14 @@
             {
                 "dependsOn": [
                     {
-                        "id": "/subscriptions/7c326b71-55e3-4ca7-8372-8227e1354e4c/resourceGroups/IBM-GSL-Broker-Project/providers/Microsoft.Storage/storageAccounts/saketsa1",
+                        "id": "/subscriptions/7c326b71-55e3-4ca7-8372-8227e1354e4c/resourceGroups/IBM-GSL-Broker-Project/providers/Microsoft.Storage/storageAccounts/saketsa",
                         "resourceType": "Microsoft.Storage/storageAccounts",
-                        "resourceName": "saketsa1"
+                        "resourceName": "saketsa"
                     },
                     {
-                        "id": "/subscriptions/7c326b71-55e3-4ca7-8372-8227e1354e4c/resourceGroups/IBM-GSL-Broker-Project/providers/Microsoft.Storage/storageAccounts/saketsa1",
+                        "id": "/subscriptions/7c326b71-55e3-4ca7-8372-8227e1354e4c/resourceGroups/IBM-GSL-Broker-Project/providers/Microsoft.Storage/storageAccounts/saketsa",
                         "resourceType": "Microsoft.Storage/storageAccounts",
-                        "resourceName": "saketsa1"
+                        "resourceName": "saketsa"
                     }
                 ],
                 "id": "/subscriptions/7c326b71-55e3-4ca7-8372-8227e1354e4c/resourceGroups/IBM-GSL-Broker-Project/providers/Microsoft.HDInsight/clusters/saketcluster2",
@@ -75,7 +72,7 @@
             },
             "storageAccountName": {
                 "type": "String",
-                "value": "saketsa1"
+                "value": "saketsa"
             },
             "storageAccountkind": {
                 "type": "String",
