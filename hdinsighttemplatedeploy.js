@@ -9,6 +9,8 @@ var ResourceManagementClient = require('azure-arm-resource').ResourceManagementC
 var SubscriptionManagementClient = require('azure-arm-resource').SubscriptionClient;
 var StorageManagementClient = require('azure-arm-storage');
 var ComputeManagementClient = require('azure-arm-compute');
+var HdinsighManagementClient = require('azure-arm-hdinsight');
+
 var VirtualMachineSizes = require('azure-arm-compute').VirtualMachineSizes;
 
 var storageservices = require('./services/storageServices');
@@ -41,10 +43,16 @@ function startExec(err, credentials){
     resourceClient = new ResourceManagementClient(credentials, subscriptionId);
     //resourceClient.resourceGroups.list(callback);
     computeClient = new ComputeManagementClient(credentials, subscriptionId);
+    hdinsightClient = HdinsighManagementClient.createHDInsightManagementClient(credentials, baseURI);
 
-    callservices();
+  
+    //clssvar cre = credentials.tokenCache._entries;
+    credentials.subscriptionId = subscriptionId;
+    //hdinsightClient.clusters.list(callback);
+    //hdinsightClient.clusters.listByResourceGroup(resourceGroupName,callback);
+    hdinsightClient.clusters.get(resourceGroupName, 'saketcluster', callback)
+   // callservices();
 }
-
 
 
 //_______SERVICES TESTIN
@@ -111,7 +119,7 @@ function callback(err, result, request, response) {
   }
   else{
       console.log(result);
-      fs.writeFileSync('./results/listOfSubscriptionsLocation.json', JSON.stringify(result, 0,4), 'utf-8');
+      fs.writeFileSync('./results/clusterNameCheck.json', JSON.stringify(result, 0,4), 'utf-8');
     }
 }
 

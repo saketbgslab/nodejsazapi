@@ -1,0 +1,85 @@
+{
+    "cluster": {
+        "tags": {},
+        "id": "/subscriptions/7c326b71-55e3-4ca7-8372-8227e1354e4c/resourceGroups/IBM-GSL-Broker-Project/providers/Microsoft.HDInsight/clusters/saketcluster",
+        "name": "saketcluster",
+        "type": "Microsoft.HDInsight/clusters",
+        "location": "East US",
+        "eTag": "6ec4f039-6aa3-4839-bd6d-0186a093ddb1",
+        "properties": {
+            "connectivityEndpoints": [
+                {
+                    "name": "SSH",
+                    "protocol": "TCP",
+                    "location": "saketcluster-ssh.azurehdinsight.net",
+                    "port": 22
+                },
+                {
+                    "name": "HTTPS",
+                    "protocol": "TCP",
+                    "location": "saketcluster.azurehdinsight.net",
+                    "port": 443
+                }
+            ],
+            "errorInfos": [],
+            "clusterVersion": "3.6.1000.0",
+            "operatingSystemType": "Linux",
+            "clusterTier": "standard",
+            "clusterDefinition": {
+                "blueprintUri": "https://blueprints.azurehdinsight.net/hadoop-3.6.1000.0.11570647.json",
+                "clusterType": "HADOOP"
+            },
+            "computeProfile": {
+                "roles": [
+                    {
+                        "scriptActions": [],
+                        "name": "headnode",
+                        "targetInstanceCount": 2,
+                        "hardwareProfile": {
+                            "vmSize": "Standard_D12_V2"
+                        },
+                        "osProfile": {
+                            "linuxOperatingSystemProfile": {
+                                "userName": "sshuser"
+                            }
+                        }
+                    },
+                    {
+                        "scriptActions": [],
+                        "name": "workernode",
+                        "targetInstanceCount": 4,
+                        "hardwareProfile": {
+                            "vmSize": "Standard_D4_V2"
+                        },
+                        "osProfile": {
+                            "linuxOperatingSystemProfile": {
+                                "userName": "sshuser"
+                            }
+                        }
+                    },
+                    {
+                        "scriptActions": [],
+                        "name": "zookeepernode",
+                        "targetInstanceCount": 3,
+                        "hardwareProfile": {
+                            "vmSize": "Medium"
+                        },
+                        "osProfile": {
+                            "linuxOperatingSystemProfile": {
+                                "userName": "sshuser"
+                            }
+                        }
+                    }
+                ]
+            },
+            "provisioningState": "InProgress",
+            "createdDate": "2018-02-27T06:24:04.75",
+            "clusterState": "ClusterStorageConfiguration",
+            "quotaInfo": {
+                "coresUsed": 40
+            }
+        }
+    },
+    "statusCode": 200,
+    "requestId": "34fe2118-48ca-42ba-8db9-58413e7f3c5f"
+}
