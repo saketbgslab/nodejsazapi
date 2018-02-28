@@ -1,0 +1,74 @@
+["one",
+[
+    [
+        {
+            "id": "/subscriptions/7c326b71-55e3-4ca7-8372-8227e1354e4c",
+            "subscriptionId": "7c326b71-55e3-4ca7-8372-8227e1354e4c",
+            "displayName": "Pay-As-You-Go",
+            "state": "Enabled",
+            "subscriptionPolicies": {
+                "locationPlacementId": "PublicAndIndia_2015-09-01",
+                "quotaId": "PayAsYouGo_2014-09-01",
+                "spendingLimit": "Off"
+            },
+            "authorizationSource": "RoleBased"
+        }
+    ],
+    {
+        "rawResponse": false,
+        "queryString": {},
+        "url": "https://management.azure.com/subscriptions?api-version=2016-06-01",
+        "method": "GET",
+        "headers": {
+            "Content-Type": "application/json; charset=utf-8",
+            "x-ms-client-request-id": "f308ee50-b997-4fdb-adfb-959681f51fb0",
+            "accept-language": "en-US",
+            "authorization": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6IlNTUWRoSTFjS3ZoUUVEU0p4RTJnR1lzNDBRMCIsImtpZCI6IlNTUWRoSTFjS3ZoUUVEU0p4RTJnR1lzNDBRMCJ9.eyJhdWQiOiJodHRwczovL21hbmFnZW1lbnQuY29yZS53aW5kb3dzLm5ldC8iLCJpc3MiOiJodHRwczovL3N0cy53aW5kb3dzLm5ldC8wYTg2MmNmZi00ODgwLTRmNDgtOWVlYi0yMjdhYzYwMDU2NzEvIiwiaWF0IjoxNTE5ODExNTkzLCJuYmYiOjE1MTk4MTE1OTMsImV4cCI6MTUxOTgxNTQ5MywiYWlvIjoiWTJOZ1lEaFZ2TGhKWTQ5QmQ0WDJvVWhSa2ZRekFBPT0iLCJhcHBpZCI6IjJkMjBkYTFjLTk2OTMtNGFlMi1iZjY0LTg3ZGIwYzdiMDVhOSIsImFwcGlkYWNyIjoiMSIsImVfZXhwIjoyNjI4MDAsImlkcCI6Imh0dHBzOi8vc3RzLndpbmRvd3MubmV0LzBhODYyY2ZmLTQ4ODAtNGY0OC05ZWViLTIyN2FjNjAwNTY3MS8iLCJvaWQiOiI3OWQ1ZGMzMi1iM2M0LTQwNjItOWVhNS04NzdlNjRkNmI1NGMiLCJzdWIiOiI3OWQ1ZGMzMi1iM2M0LTQwNjItOWVhNS04NzdlNjRkNmI1NGMiLCJ0aWQiOiIwYTg2MmNmZi00ODgwLTRmNDgtOWVlYi0yMjdhYzYwMDU2NzEiLCJ1dGkiOiJuZWl2SmRpS1UwV1d1cWx0cHFNdkFBIiwidmVyIjoiMS4wIn0.T5UVh7G1AERs3-rz2h7-E4YPOh58_FpoaqpZBrHfuaIQGH_0WaFWoSOBWvRY9mKm-FrA1tAknfHa91cDL_4ruotiCSAR6fQNh8JYZw5O1tLcy1IKUiBmfm35fZQZ7XiNF5yQLZfFuauudlU_p866xRxQxkqRh0ubMKvbFqFWIq8-G9PAmZ30bhd2o_SQ4iT2ZfQSssPoIKSf3miIX-jONCDiqfGbHwDLwMUWsRS1l9ZPCEkuvKkJWUJCq3XyiPDA8QBatsjyb2Ud0k00gp-clrafTj2m6T2hDm1GSDMKijlBUtL6WFwQP6nXLLxgy8E5T4ilXm49y7l0PQAGSdj6YA",
+            "user-agent": "Node/v8.9.4 (x64-Windows_NT-6.1.7601) ms-rest/2.3.0 ms-rest-azure/2.5.3 azure-arm-resource/3.1.0-preview Azure-SDK-For-Node"
+        },
+        "body": null
+    },
+    {
+        "statusCode": 200,
+        "body": "{\"value\":[{\"id\":\"/subscriptions/7c326b71-55e3-4ca7-8372-8227e1354e4c\",\"subscriptionId\":\"7c326b71-55e3-4ca7-8372-8227e1354e4c\",\"displayName\":\"Pay-As-You-Go\",\"state\":\"Enabled\",\"subscriptionPolicies\":{\"locationPlacementId\":\"PublicAndIndia_2015-09-01\",\"quotaId\":\"PayAsYouGo_2014-09-01\",\"spendingLimit\":\"Off\"},\"authorizationSource\":\"RoleBased\"}]}",
+        "headers": {
+            "cache-control": "no-cache",
+            "pragma": "no-cache",
+            "content-length": "341",
+            "content-type": "application/json; charset=utf-8",
+            "expires": "-1",
+            "x-ms-ratelimit-remaining-tenant-reads": "14988",
+            "x-ms-request-id": "80813946-8c6b-44de-968c-cd8d7ea8a721",
+            "x-ms-correlation-request-id": "80813946-8c6b-44de-968c-cd8d7ea8a721",
+            "x-ms-routing-request-id": "WESTINDIA:20180228T095814Z:80813946-8c6b-44de-968c-cd8d7ea8a721",
+            "strict-transport-security": "max-age=31536000; includeSubDomains",
+            "x-content-type-options": "nosniff",
+            "date": "Wed, 28 Feb 2018 09:58:14 GMT",
+            "connection": "close"
+        },
+        "request": {
+            "uri": {
+                "protocol": "https:",
+                "slashes": true,
+                "auth": null,
+                "host": "management.azure.com",
+                "port": 443,
+                "hostname": "management.azure.com",
+                "hash": null,
+                "search": "?api-version=2016-06-01",
+                "query": "api-version=2016-06-01",
+                "pathname": "/subscriptions",
+                "path": "/subscriptions?api-version=2016-06-01",
+                "href": "https://management.azure.com/subscriptions?api-version=2016-06-01"
+            },
+            "method": "GET",
+            "headers": {
+                "Content-Type": "application/json; charset=utf-8",
+                "x-ms-client-request-id": "f308ee50-b997-4fdb-adfb-959681f51fb0",
+                "accept-language": "en-US",
+                "authorization": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6IlNTUWRoSTFjS3ZoUUVEU0p4RTJnR1lzNDBRMCIsImtpZCI6IlNTUWRoSTFjS3ZoUUVEU0p4RTJnR1lzNDBRMCJ9.eyJhdWQiOiJodHRwczovL21hbmFnZW1lbnQuY29yZS53aW5kb3dzLm5ldC8iLCJpc3MiOiJodHRwczovL3N0cy53aW5kb3dzLm5ldC8wYTg2MmNmZi00ODgwLTRmNDgtOWVlYi0yMjdhYzYwMDU2NzEvIiwiaWF0IjoxNTE5ODExNTkzLCJuYmYiOjE1MTk4MTE1OTMsImV4cCI6MTUxOTgxNTQ5MywiYWlvIjoiWTJOZ1lEaFZ2TGhKWTQ5QmQ0WDJvVWhSa2ZRekFBPT0iLCJhcHBpZCI6IjJkMjBkYTFjLTk2OTMtNGFlMi1iZjY0LTg3ZGIwYzdiMDVhOSIsImFwcGlkYWNyIjoiMSIsImVfZXhwIjoyNjI4MDAsImlkcCI6Imh0dHBzOi8vc3RzLndpbmRvd3MubmV0LzBhODYyY2ZmLTQ4ODAtNGY0OC05ZWViLTIyN2FjNjAwNTY3MS8iLCJvaWQiOiI3OWQ1ZGMzMi1iM2M0LTQwNjItOWVhNS04NzdlNjRkNmI1NGMiLCJzdWIiOiI3OWQ1ZGMzMi1iM2M0LTQwNjItOWVhNS04NzdlNjRkNmI1NGMiLCJ0aWQiOiIwYTg2MmNmZi00ODgwLTRmNDgtOWVlYi0yMjdhYzYwMDU2NzEiLCJ1dGkiOiJuZWl2SmRpS1UwV1d1cWx0cHFNdkFBIiwidmVyIjoiMS4wIn0.T5UVh7G1AERs3-rz2h7-E4YPOh58_FpoaqpZBrHfuaIQGH_0WaFWoSOBWvRY9mKm-FrA1tAknfHa91cDL_4ruotiCSAR6fQNh8JYZw5O1tLcy1IKUiBmfm35fZQZ7XiNF5yQLZfFuauudlU_p866xRxQxkqRh0ubMKvbFqFWIq8-G9PAmZ30bhd2o_SQ4iT2ZfQSssPoIKSf3miIX-jONCDiqfGbHwDLwMUWsRS1l9ZPCEkuvKkJWUJCq3XyiPDA8QBatsjyb2Ud0k00gp-clrafTj2m6T2hDm1GSDMKijlBUtL6WFwQP6nXLLxgy8E5T4ilXm49y7l0PQAGSdj6YA"
+            }
+        }
+    }
+],
+"three" ]

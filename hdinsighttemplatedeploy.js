@@ -11,7 +11,7 @@ var StorageManagementClient = require('azure-arm-storage');
 var ComputeManagementClient = require('azure-arm-compute');
 var HdinsighManagementClient = require('azure-arm-hdinsight');
 
-var VirtualMachineSizes = require('azure-arm-compute').VirtualMachineSizes;
+//var VirtualMachineSizes = require('azure-arm-compute').VirtualMachineSizes;
 
 var storageservices = require('./services/storageServices');
 var computeServives = require('./services/computeServices');
@@ -45,7 +45,7 @@ function startExec(err, credentials){
     computeClient = new ComputeManagementClient(credentials, subscriptionId);
     hdinsightClient = HdinsighManagementClient.createHDInsightManagementClient(credentials, baseURI);
 
-  
+   // console.log('\n\n\n\t\tCredentials' + JSON.stringify(credentials.tokenCache._entries,0,4));  
     //clssvar cre = credentials.tokenCache._entries;
     credentials.subscriptionId = subscriptionId;
     //hdinsightClient.clusters.list(callback);

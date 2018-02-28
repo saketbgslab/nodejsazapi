@@ -30,16 +30,16 @@ function loadTemplateAndDeploy(resourceClient, deploymentDetails){
 
     console.log(util.format('\nDeploying template %s : \n%s', deploymentName , util.inspect(template, { depth: null })));
 
-    resourceClient.deployments.validate(resourceGroupName, 
-                                        deploymentName, 
-                                        deploymentParameters, 
-                                        deploymentDetails.callback);
-/*
     resourceClient.deployments.createOrUpdate(resourceGroupName, 
                                                 deploymentName, 
                                                 deploymentParameters, 
                                                 deploymentDetails.callback);
-*/                                                
 }
 
+/*
+  Function to get list of resource groups
+*/
+function getResourceGroups(resourceClient, callback){
+    resourceClient.resourceGroups.list(callback);
+}
 module.exports.loadTemplateAndDeploy = loadTemplateAndDeploy;

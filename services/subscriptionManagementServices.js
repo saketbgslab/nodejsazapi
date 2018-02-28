@@ -24,7 +24,7 @@ function getsubscriptionLocationsList(subscriptionClient, subscriptionId){
 /*
 */
 function getsubscriptionList(subscriptionClient, callback){
-    console.log('getting subscriptions list');
+    console.log('getting subscriptions list' + subscriptionClient);
 
     subscriptionClient.subscriptions.list(callback);
 }
