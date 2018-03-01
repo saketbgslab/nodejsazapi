@@ -28,7 +28,7 @@ function loadTemplateAndDeploy(resourceClient, deploymentDetails){
     var deploymentName = deploymentDetails.deploymentName;
     var resourceGroupName = deploymentDetails.resourceGroupName;
 
-    console.log(util.format('\nDeploying template %s : \n%s', deploymentName , util.inspect(template, { depth: null })));
+    //console.log(util.format('\nDeploying template %s : \n%s', deploymentName , util.inspect(template, { depth: null })));
 
     resourceClient.deployments.createOrUpdate(resourceGroupName, 
                                                 deploymentName, 

@@ -6,7 +6,7 @@
     
     <body>
         <h1><%= topicHead %></h1>
-        <form name="form1" method="POST" action="/deploy-template">
+        <form name="form1" id="form1">
             <table>
                 <tr>
                     <td>Subscriptions</td>
@@ -30,17 +30,17 @@
                 
                 <tr>
                     <td>clusterName</td>
-                    <td><input type="text" name="clusterName"  ></td>
+                    <td><input type="text" name="clusterName" required="true" ></td>
                 </tr>
             
                 <tr>
                     <td>clusterLoginUserName</td>
-                    <td><input type="text" name="clusterLoginUserName" value="<%= getDefaultValue('clusterLoginUserName')%>" ></td>
+                    <td><input type="text" name="clusterLoginUserName" required="true" value="<%= getDefaultValue('clusterLoginUserName')%>" ></td>
                 </tr>
             
                 <tr>
                     <td>clusterLoginPassword</td>
-                    <td><input type="password" name="clusterLoginPassword"></td>
+                    <td><input type="password" required="true"  name="clusterLoginPassword"></td>
                 </tr>
             
                 <tr>
@@ -70,12 +70,12 @@
             
                 <tr>
                     <td>sshUserName</td>
-                    <td><input type="text" name="sshUserName" value="sshuser" ></td>
+                    <td><input type="text" name="sshUserName" required="true" value="sshuser" ></td>
                 </tr>
             
                 <tr>
                     <td>sshPassword</td>
-                    <td><input type="password" name="sshPassword"  ></td>
+                    <td><input type="password" required="true" name="sshPassword"  ></td>
                 </tr>
             
                 <tr>
@@ -87,13 +87,13 @@
                 <tr id="storageAccounts" >
                     <td>storageAccounts</td>
                     <td>
-                        <select  name="storageAccountName" id="storageAccountsSelect"> </select>
+                        <select  name="storageAccountName"  id="storageAccountsSelect"> </select>
                     </td>
                 </tr>
 
                 <tr id="storageAccountName" >
                     <td id="storageAccountNameLabel">storageAccountName</td>
-                    <td><input type="text" id="storageAccountNameText" name="storageAccountName" value="VALIDATE ME" ></td>
+                    <td><input type="text" id="storageAccountNameText"  name="storageAccountName" ></td>
                 </tr>
             
                 <tr>
@@ -141,7 +141,7 @@ $(document).ready(function(){
     
     $("#locationSelect").change(storageAjax);
     $("#subscriptionsSelect").change(resGroupAjax);
-    $("#storageAccountNameText").change(accountNameValidateAjax)
+    $("#storageAccountNameText").focusout(accountNameValidateAjax)
 
     $("#existSaRadio").on('change', function(e){ 
         $("#storageAccountType").hide();
@@ -158,17 +158,37 @@ $(document).ready(function(){
         $("#storageAccountName").show();
         $("#storageAccounts").hide();
     });
-});
 
+
+    $("#form1").submit(function(event){
+        var formData  = $("#form1").serializeArray();
+        
+
+        var deploymentRes = $.ajax({   
+                type: 'POST',
+                url: '/deploy-template',
+                dataType: 'json',
+                data: formData,
+                success: function(result) {
+                    alert(JSON.stringify(result,0,4))
+
+                }
+            }).responseJSON
+
+         event.preventDefault();
+    });
+});
 
 //--------------------AJAX CALLS--------------------------
 
 function accountNameValidateAjax(){
 
     accName = $("#storageAccountNameText").val();
+    subscriptionId = $("#subscriptionsSelect").val();
     console.log('Entered storage account name is:  ' + accName);
     var account = {};
     account.name = accName;
+    account.subscriptionId = subscriptionId;
 
     validateRes = $.ajax({
         type: 'POST',
@@ -227,28 +247,31 @@ function resGroupAjax(){
  //------------AJAX CALL FOR STORAGE ACCOUNTS----------------
 function storageAjax(){
 
-         locName = $("#locationSelect").val();
-        console.log('selected location from drop down:  ' + locName);
-        var locations = {};
-        locations.name = locName;
+    subscriptionId = $("#subscriptionsSelect").val();
+    locName = $("#locationSelect").val();
+    console.log('selected location from drop down:  ' + locName);
+    console.log('selected subscription ID from drop down:  ' + subscriptionId);
+    var locations = {};
+    locations.name = locName;
+    locations.subscriptionId = subscriptionId;
 
-        storageAccounts = $.ajax({
-        type: 'POST',
-        url: '/storage-account-list',
-        dataType: 'json',
-        data: locations,
-        success: function(result) {
-            console.log(result);
-            //fill storage account list
-            var option = '';
-            for (var i=0;i<result.length;i++){
-            option += '<option value="'+ result[i].id + '">' + result[i].name + '</option>';
-            }
-            $("#storageAccountsSelect").empty();
-            $("#storageAccountsSelect").append(option);    
+    storageAccounts = $.ajax({
+    type: 'POST',
+    url: '/storage-account-list',
+    dataType: 'json',
+    data: locations,
+    success: function(result) {
+        console.log(result);
+        //fill storage account list
+        var option = '';
+        for (var i=0;i<result.length;i++){
+        option += '<option value="'+ result[i].name + '">' + result[i].name + '</option>';
         }
-      }).responseJSON;
-      return false;
+        $("#storageAccountsSelect").empty();
+        $("#storageAccountsSelect").append(option);    
+    }
+    }).responseJSON;
+    return false;
 }
 
 </script>

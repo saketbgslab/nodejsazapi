@@ -39,7 +39,7 @@ var storageClient;
 var resourceClient;
 var computeClient;
 var hdinsightClient;
-var credentials
+var credentials;
 //--------------------CLIENTS--------------------------------------------
 
 
@@ -63,12 +63,43 @@ function startExec(err, credentials){
    // callservices();
 }
 
+
+function _validateAccountName(accountName, subsId ,callback){
+    
+    //validate subscriptionId 
+    if (subsId === null || subsId === undefined || typeof subsId.valueOf() !== 'string') {
+        throw new Error('subscriptionID cannot be null or undefined and it must be of type string.');
+        }
+    //check if storageClient already active or undefined
+    if(storageClient === null || storageClient === undefined || storageClient.subscriptionId !== subsId){
+        storageClient = new StorageManagementClient(credentials, subsId);
+        console.log('\n\n\t I AM CREATING NEW STORAGE CLIENT' );
+    }
+
+    return storageservices.validateAccountName(storageClient,accountName,callback);
+}
+
+function _listStorageAccounts(subsId,callback){
+
+    //validate subscriptionId 
+    if (subsId === null || subsId === undefined || typeof subsId.valueOf() !== 'string') {
+        throw new Error('subscriptionID cannot be null or undefined and it must be of type string.');
+        }
+    //check if storageClient already active or undefined
+    if(storageClient === null || storageClient === undefined || storageClient.subscriptionId !== subsId){
+        storageClient = new StorageManagementClient(credentials, subsId);
+        console.log('\n\n\t I AM CREATING NEW STORAGE CLIENT' );
+    }
+
+    return storageservices.listStorageAccounts(storageClient, callback);
+    
+}
+
 function _getResourceGroupList(subsId,callback){
     //validate subscriptionId 
     if (subsId === null || subsId === undefined || typeof subsId.valueOf() !== 'string') {
         throw new Error('subscriptionID cannot be null or undefined and it must be of type string.');
       }
-      
     //check if resourceClient already active  
     if(resourceClient === null || resourceClient === undefined || resourceClient.subscriptionId !== subsId){
         resourceClient = new ResourceManagementClient(credentials, subsId);
@@ -76,10 +107,26 @@ function _getResourceGroupList(subsId,callback){
     }
 
     resourceClient.resourceGroups.list(callback);
-
 }
 
+
+function _getLocationsList(subsId,callback){
+
+    //validate subscriptionId 
+    if (subsId === null || subsId === undefined || typeof subsId.valueOf() !== 'string') {
+    throw new Error('subscriptionID cannot be null or undefined and it must be of type string.');
+    }
+ 
+    //check if resourceClient already active  
+    if(subscriptionClient === null || subscriptionClient === undefined ){
+        return callback('needs subscription id', null);
+    }
+    return subscriptionManagementServices.getsubscriptionLocationsList(subscriptionClient,subscriptionId, callback);
+}
+
+
 function _getsubscriptionList(callback){
+
     subscriptionManagementServices.getsubscriptionList(subscriptionClient, callback);
 }
 
@@ -132,7 +179,6 @@ function storageListCallback(err, result, request, response) {
 module.exports.templateController = function (app){
     
     app.get('/templateForm', urlencodedParser, function(req, res){
-
         async.series([
             function (callback) {
                 //Task 1: Login and Clien Setup
@@ -141,12 +187,12 @@ module.exports.templateController = function (app){
                     if (err) {
                         return callback(err);
                     }
+                    process.env['CREDENTIALS'] = cred;
                     credentials = cred;
                     subscriptionClient = new SubscriptionManagementClient(credentials,baseURI ,callback);
-                    //storageClient = new StorageManagementClient(credentials, subscriptionId);
                     //resourceClient = new ResourceManagementClient(credentials, subscriptionId);
                     //computeClient = new ComputeManagementClient(credentials, subscriptionId);
-                    hdinsightClient = HdinsighManagementClient.createHDInsightManagementClient(credentials, baseURI);
+                    //hdinsightClient = HdinsighManagementClient.createHDInsightManagementClient(credentials, baseURI);
                     console.log('Exiting Task 1');
                     callback(null, 'one')
                 });
@@ -202,154 +248,117 @@ module.exports.templateController = function (app){
         subscriptionId = req.body.subscriptionId;
 
         async.series({
-            //Task1: get list of resource groups
-            resGroup: function(callback){
-                return _getResourceGroupList(subscriptionId,callback);
-            },
+                //Task1: get list of resource groups
+                resGroup: function(callback){
+                    return _getResourceGroupList(subscriptionId,callback);
+                },
 
-            //Task2: get list of locations 
-            locList: function(callback){
-                return _getLocationsList(subscriptionId,callback);
-            } 
-        },
+                //Task2: get list of locations 
+                locList: function(callback){
+                    return _getLocationsList(subscriptionId,callback);
+                 } 
+            },
+            //This is a callback function of the series
             function(err, results){
                 if(err){
                     console.error('\n\n\t' + err);
                 }
-            //    console.log('\n\n\t Resource GROUP res: '+ JSON.stringify(results,0,4));
-             //   console.log('\n\n\t RESOURCE GROUP : ' + JSON.stringify(results.resGroup[0],0,4) );
                 var details= {};
                 details.resourceGroups = results.resGroup[0];
-                details.locationsList = [];
+                details.locationsList = results.locList;
                 res.send(details);
-
         });
-        //make resourceManagementServices call for resource group list
-
-        //make subscriptionManagementService call for Locations List
-
-        //after getting resourceGroups and locations JSON
-     /*   var details = {};
-        details.locationsList = [
-            {
-                "id": "/subscriptions/7c326b71-55e3-4ca7-8372-8227e1354e4c/locations/eastus",
-                "name": "eastus",
-                "displayName": "East US",
-                "latitude": "37.3719",
-                "longitude": "-79.8164"
-            },
-            {
-                "id": "/subscriptions/7c326b71-55e3-4ca7-8372-8227e1354e4c/locations/southeastasia",
-                "name": "southeastasia",
-                "displayName": "Southeast Asia",
-                "latitude": "1.283",
-                "longitude": "103.833"
-            },
-            {
-                "id": "/subscriptions/7c326b71-55e3-4ca7-8372-8227e1354e4c/locations/centralus",
-                "name": "centralus",
-                "displayName": "Central US",
-                "latitude": "41.5908",
-                "longitude": "-93.6208"
-            },{
-                "id": "/subscriptions/7c326b71-55e3-4ca7-8372-8227e1354e4c/locations/eastasia",
-                "name": "eastasia",
-                "displayName": "East Asia",
-                "latitude": "22.267",
-                "longitude": "114.188"
-            }
-             ] ;
-
-      */  
     })
-
-
 
     app.post('/storage-account-list', urlencodedParser, function(req, res){
         console.log(req.body.name);
         locName = req.body.name;
+        subscriptionId = req.body.subscriptionId;
 
-//        subscriptionId = req.body.subscriptionId;
-
-        //make resourceManagementServices call for resource group list
-
-        //make subscriptionManagementService call for Locations List
-
-        //after getting resourceGroups and locations JSON
-        var storageAccounts = [
-            {
-                "id": "/subscriptions/7c326b71-55e3-4ca7-8372-8227e1354e4c/resourceGroups/IBM-GSL-Broker-Project/providers/Microsoft.Storage/storageAccounts/saketsa",
-                "name": "saketsa",
-                "type": "Microsoft.Storage/storageAccounts",
-                "location": "eastus",
-                "tags": {},
-                "sku": {
-                    "name": "Standard_LRS",
-                    "tier": "Standard"
-                },
-                "kind": "StorageV2",
-                "provisioningState": "Succeeded",
-                "primaryEndpoints": {
-                    "blob": "https://saketsa.blob.core.windows.net/",
-                    "queue": "https://saketsa.queue.core.windows.net/",
-                    "table": "https://saketsa.table.core.windows.net/",
-                    "file": "https://saketsa.file.core.windows.net/"
-                },
-                "primaryLocation": "eastus",
-                "statusOfPrimary": "available",
-                "creationTime": "2018-02-16T17:17:48.945Z",
-                "encryption": {
-                    "services": {
-                        "blob": {
-                            "enabled": true,
-                            "lastEnabledTime": "2018-02-16T17:17:49.070Z"
-                        },
-                        "file": {
-                            "enabled": true,
-                            "lastEnabledTime": "2018-02-16T17:17:49.070Z"
-                        }
-                    },
-                    "keySource": "Microsoft.Storage"
-                },
-                "accessTier": "Cool",
-                "enableHttpsTrafficOnly": false,
-                "networkRuleSet": {
-                    "bypass": "AzureServices",
-                    "virtualNetworkRules": [],
-                    "ipRules": [],
-                    "defaultAction": "Allow"
+        async.series({
+                accounts: function(callback){
+                    return _listStorageAccounts(subscriptionId, callback);
                 }
+            },
+            //series callback function
+            function(err, results){
+                if(err){
+                    console.error('\n\n\t' + err);
+                }
+                ///console.log('\n\n\t STORAGE ACCOUNT RESULT: ' + JSON.stringify(results.accounts,0,4));
+                var storageAccounts = results.accounts;
+                resStorageAccounts = [];
+                for (var i=0;i<storageAccounts.length;i++){
+                    if(storageAccounts[i].location == locName){
+                        resStorageAccounts.push(storageAccounts[i])
+                    }
+                }
+                res.send(resStorageAccounts);
             }
-        ];
-
-        resStorageAccounts = [];
-        for (var i=0;i<storageAccounts.length;i++){
-            if(storageAccounts[i].location == locName){
-                resStorageAccounts.push(storageAccounts[i])
-            }
-        }
-        res.send(resStorageAccounts);
+        );
     })
 
-    app.post('/deploy-template',urlencodedParser, function(req, res){
-        console.log(req.body)
-        res.send('I got you bro!!');
-    });
-
     app.post('/validate-acc-name', urlencodedParser, function(req, res){
-        console.log(req.body);
-        res1 = { 
-            nameAvailable: false,
-            reason: 'AlreadyExists',
-            message: 'The storage account named saketsa is already taken.'
-        };
-        res2 = { nameAvailable: true};
-        if(req.body.name == 'saketsa')
-        { 
-            res.send(res1); 
-        } else{
-            res.send(res2);
-        }
+        //console.log(req.body);
+        var accName = req.body.name;
+        var subscriptionId = req.body.subscriptionId;
+
+        async.series({
+                validity:function(callback){
+                    return _validateAccountName(accName, subscriptionId,callback);
+                }
+            },
+            function(err, results){
+                if(err){
+                    res.send('SOMETHING WENT WRONG!!!');
+                }
+                res.send(results.validity);
+            }
+        );
+    });
+    
+    app.post('/deploy-template',urlencodedParser, function(req, res){
+        console.log('\n\n\trehmhml;mlr;eh' + JSON.stringify(req.body,0,4))
+        formDetails = req.body;
+        myparam = {};
+        Object.keys(formDetails).forEach(function(key) {
+            myparam[key] = {};
+        });
+        
+        Object.keys(formDetails).forEach(function(key) {
+            if(key === 'storageAccountName'){
+                (formDetails['storageAccNewOrExisting'] == "existing") ?(myparam[key]['value'] = formDetails[key][0])  : (myparam[key]['value'] = formDetails[key]) 
+            }
+            else{
+                myparam[key]['value'] = formDetails[key];
+            }
+        });
+
+        myparam['workerNodeInstanceCount']['value'] = Number(myparam['workerNodeInstanceCount']['value']);
+
+        var deploymentDetails = {};
+        deploymentDetails.resourceGroupName = myparam.resourceGroupName.value;
+        deploymentDetails.deploymentName = 'saketcluster1qazsx' + Date.now();
+        deploymentDetails.templateName = "clusterDeploy.json";
+        delete myparam.resourceGroupName;
+        delete myparam.subscriptionid;
+        deploymentDetails.parameters = myparam;
+        deploymentDetails.callback = function(err, result, request, response) {
+            if (err) {
+              console.error('\nERROR:' + err);
+              res.send(err);
+            }
+            else{
+                console.log(result);
+                fs.writeFileSync('..results/HDDeployresult2.json', JSON.stringify(result, 0,4), 'utf-8');
+                res.send(result)
+            }
+          };
+
+          console.log('\n\n\nt---------------' + JSON.stringify(deploymentDetails.parameters,0,4));
+
+          resourceManagementServices.loadTemplateAndDeploy(resourceClient, deploymentDetails);
+
     });
 };
 

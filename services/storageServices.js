@@ -12,25 +12,34 @@ var util = require('util')
         controllercallback(null, result);
 });)
 */
-function listStorageAccounts(storageClient, functionCallback){
-    console.log('\n\tList storage accounts under subscription for you!');
-    return storageClient.storageAccounts.list(functionCallback);
+function listStorageAccounts(storageClient, callback){
+    console.log('\n\tListimg storage accounts under subscription for you!');
+    return storageClient.storageAccounts.list( function(err, result, request, response) {
+        if (err) {
+            return callback('\checkNameAvailability ERROR:' + err, null);
+        }
+        else{
+            //console.log(result);
+            return callback(err, result);
+        }
+    });
 }
 
 /*
 
 
 */
-function validateAccountName(storageClient,accountName){
-storageClient.storageAccounts.checkNameAvailability(accountName, function(err, result, request, response) {
-            if (err) {
-            console.error('\checkNameAvailability ERROR:' + err);
-            }
-            else{
-                console.log(result);
-                fs.writeFileSync('./results/nameAvailability.json', JSON.stringify(result, 0,4), 'utf-8');
-            }
-        });
+function validateAccountName(storageClient,accountName,callback){
+    storageClient.storageAccounts.checkNameAvailability(accountName, function(err, result, request, response) {
+        if (err) {
+            return callback('services checkNameAvailability: ' + err, null);
+        }
+        else{
+            console.log(result);
+            //fs.writeFileSync('./results/nameAvailability.json', JSON.stringify(result, 0,4), 'utf-8');
+            return callback(null, result);
+        }
+    });
 }
 
 module.exports.listStorageAccounts = listStorageAccounts;

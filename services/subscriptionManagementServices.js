@@ -4,20 +4,19 @@ var path = require('path');
 /*
 
 */
-function getsubscriptionLocationsList(subscriptionClient, subscriptionId){
+function getsubscriptionLocationsList(subscriptionClient, subscriptionId, callback){
     console.log('\n\tFectching List of Locattions for subscription Id '+ subscriptionId );
 
     subscriptionClient.subscriptions.listLocations(subscriptionId, function (err, result, request, response) {
         if (err) {
-          return console.error('\n Error while Updating List of VM Sizes:  ' + err);
+          console.error('\n Error while Updating List of VM Sizes:  ' + err);
+            return callback(err, null);
         }
         else{
-            console.log('\n Fetched List of VM Sizes!');
-            console.log('\n\n\t LGSDGDSGEDSHDSHEHEWEWHEWHHH: ' + result.length)
             //fs.writeFileSync('./results/'+subscriptionId+'Locations.json', JSON.stringify(result, 0,4), 'utf-8');
-            console.log('\n '+ subscriptionId+'Locations.json is now updated')
+            console.log('\n '+ subscriptionId+'Locations.json is now updated');
+            return callback(null, result);
         }
-       // callback(null, result);
       });
 }
 

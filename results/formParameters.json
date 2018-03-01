@@ -1,21 +1,19 @@
 {
     "subscriptionid": "7c326b71-55e3-4ca7-8372-8227e1354e4c",
     "resourceGroupName": "IBM-GSL-Broker-Project",
-    "clusterName": "saketcluster",
+    "clusterName": "rrebrreb",
     "clusterLoginUserName": "admin",
-    "clusterLoginPassword": "dsghgrewhrewh`",
-    "location": "eastus",
-    "clusterVersion": "",
+    "clusterLoginPassword": "rbrebrbb",
+    "location": "eastasia",
+    "clusterVersion": "3.5",
     "clusterKind": "HADOOP",
     "sshUserName": "sshuser",
-    "sshPassword": "fednhedfnenr",
+    "sshPassword": "rrbrbrbrbr",
     "storageAccNewOrExisting": "existing",
     "storageAccountName": [
-        "/subscriptions/7c326b71-55e3-4ca7-8372-8227e1354e4c/resourceGroups/IBM-GSL-Broker-Project/providers/Microsoft.Storage/storageAccounts/saketsa",
-        "VALIDATE ME"
+        "saketsa3",
+        ""
     ],
-    "storageAccountkind": "Storage",
-    "selectpicker": "Standard_ZRS",
     "nodeVmSize": "Standard_B1ms",
     "workerNodeInstanceCount": "3"
 }
