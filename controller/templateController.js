@@ -338,7 +338,7 @@ module.exports.templateController = function (app){
 
         var deploymentDetails = {};
         deploymentDetails.resourceGroupName = myparam.resourceGroupName.value;
-        deploymentDetails.deploymentName = 'saketcluster1qazsx' + Date.now();
+        deploymentDetails.deploymentName = 'saketa4extralarge' + Date.now();
         deploymentDetails.templateName = "clusterDeploy.json";
         delete myparam.resourceGroupName;
         delete myparam.subscriptionid;
@@ -350,7 +350,7 @@ module.exports.templateController = function (app){
             }
             else{
                 console.log(result);
-                fs.writeFileSync('..results/HDDeployresult2.json', JSON.stringify(result, 0,4), 'utf-8');
+                fs.writeFileSync('results/HDDeployresult2.json', JSON.stringify(result, 0,4), 'utf-8');
                 res.send(result)
             }
           };

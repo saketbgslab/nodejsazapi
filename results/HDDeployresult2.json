@@ -1,8 +1,11 @@
 {
+    "id": "/subscriptions/7c326b71-55e3-4ca7-8372-8227e1354e4c/resourceGroups/IBM-GSL-Broker-Project/providers/Microsoft.Resources/deployments/saketa4extralarge1520233989311",
+    "name": "saketa4extralarge1520233989311",
     "properties": {
         "provisioningState": "Succeeded",
-        "correlationId": "c9c7102a-ad92-4478-9411-027f06efd735",
-        "timestamp": "2018-02-26T13:48:19.640Z",
+        "correlationId": "45bd4885-fd70-49de-bd6c-b3a159387396",
+        "timestamp": "2018-03-05T07:28:11.084Z",
+        "outputs": {},
         "providers": [
             {
                 "namespace": "Microsoft.HDInsight",
@@ -10,7 +13,7 @@
                     {
                         "resourceType": "clusters",
                         "locations": [
-                            "eastus"
+                            "eastus2"
                         ]
                     }
                 ]
@@ -30,15 +33,15 @@
                         "resourceName": "saketsa"
                     }
                 ],
-                "id": "/subscriptions/7c326b71-55e3-4ca7-8372-8227e1354e4c/resourceGroups/IBM-GSL-Broker-Project/providers/Microsoft.HDInsight/clusters/saketcluster2",
+                "id": "/subscriptions/7c326b71-55e3-4ca7-8372-8227e1354e4c/resourceGroups/IBM-GSL-Broker-Project/providers/Microsoft.HDInsight/clusters/saka3vm",
                 "resourceType": "Microsoft.HDInsight/clusters",
-                "resourceName": "saketcluster2"
+                "resourceName": "saka3vm"
             }
         ],
         "parameters": {
             "clusterName": {
                 "type": "String",
-                "value": "saketcluster2"
+                "value": "saka3vm"
             },
             "clusterLoginUserName": {
                 "type": "String",
@@ -49,11 +52,11 @@
             },
             "location": {
                 "type": "String",
-                "value": "eastus"
+                "value": "eastus2"
             },
             "clusterVersion": {
                 "type": "String",
-                "value": "3.6"
+                "value": "3.5"
             },
             "clusterKind": {
                 "type": "String",
@@ -84,11 +87,11 @@
             },
             "nodeVmSize": {
                 "type": "String",
-                "value": "Standard_D12_V2"
+                "value": "Standard_A3"
             },
             "workerNodeInstanceCount": {
                 "type": "Int",
-                "value": 3
+                "value": 2
             }
         },
         "mode": "Incremental"

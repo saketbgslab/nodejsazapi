@@ -102,7 +102,7 @@
                         <select  name="nodeVmSize" id="nodeVmSizeSelect">
                             <optgroup >
                                 <% parameters['vmSizeList'].forEach(function(val){ %>
-                                <option value="<%= val.name %>"><%= val.name %></option>
+                                <option value="<%= val.name %>"><%= val.displayName %></option>
                                 <% }) %>
                             </optgroup>
                         </select>
@@ -184,26 +184,28 @@ $(document).ready(function(){
 function accountNameValidateAjax(){
 
     accName = $("#storageAccountNameText").val();
-    subscriptionId = $("#subscriptionsSelect").val();
-    console.log('Entered storage account name is:  ' + accName);
-    var account = {};
-    account.name = accName;
-    account.subscriptionId = subscriptionId;
+    if(accName !== ""){
+        subscriptionId = $("#subscriptionsSelect").val();
+        console.log('Entered storage account name is:  ' + accName);
+        var account = {};
+        account.name = accName;
+        account.subscriptionId = subscriptionId;
 
-    validateRes = $.ajax({
-        type: 'POST',
-        url: '/validate-acc-name',
-        dataType: 'json',
-        data: account,
-        success: function(result) {
-            console.log(result);
-            if(result.nameAvailable){
+        validateRes = $.ajax({
+            type: 'POST',
+            url: '/validate-acc-name',
+            dataType: 'json',
+            data: account,
+            success: function(result) {
+                console.log(result);
+                if(result.nameAvailable){
 
-            } else {
-                alert(result.message);
+                } else {
+                    alert(result.message);
+                }
             }
-        }
-      }).responseJSON;
+        }).responseJSON;
+    }
 
     return false
 }
