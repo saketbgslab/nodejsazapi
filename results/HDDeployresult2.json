@@ -1,10 +1,10 @@
 {
-    "id": "/subscriptions/7c326b71-55e3-4ca7-8372-8227e1354e4c/resourceGroups/IBM-GSL-Broker-Project/providers/Microsoft.Resources/deployments/saketa4extralarge1520233989311",
-    "name": "saketa4extralarge1520233989311",
+    "id": "/subscriptions/7c326b71-55e3-4ca7-8372-8227e1354e4c/resourceGroups/IBM-GSL-Broker-Project/providers/Microsoft.Resources/deployments/saketa4extralarge1520922534967",
+    "name": "saketa4extralarge1520922534967",
     "properties": {
         "provisioningState": "Succeeded",
-        "correlationId": "45bd4885-fd70-49de-bd6c-b3a159387396",
-        "timestamp": "2018-03-05T07:28:11.084Z",
+        "correlationId": "688f2bd5-b1b2-45d7-a8a9-fc58e971571c",
+        "timestamp": "2018-03-13T06:40:20.657Z",
         "outputs": {},
         "providers": [
             {
@@ -13,7 +13,7 @@
                     {
                         "resourceType": "clusters",
                         "locations": [
-                            "eastus2"
+                            "eastasia"
                         ]
                     }
                 ]
@@ -23,25 +23,25 @@
             {
                 "dependsOn": [
                     {
-                        "id": "/subscriptions/7c326b71-55e3-4ca7-8372-8227e1354e4c/resourceGroups/IBM-GSL-Broker-Project/providers/Microsoft.Storage/storageAccounts/saketsa",
+                        "id": "/subscriptions/7c326b71-55e3-4ca7-8372-8227e1354e4c/resourceGroups/IBM-GSL-Broker-Project/providers/Microsoft.Storage/storageAccounts/saketsa13",
                         "resourceType": "Microsoft.Storage/storageAccounts",
-                        "resourceName": "saketsa"
+                        "resourceName": "saketsa13"
                     },
                     {
-                        "id": "/subscriptions/7c326b71-55e3-4ca7-8372-8227e1354e4c/resourceGroups/IBM-GSL-Broker-Project/providers/Microsoft.Storage/storageAccounts/saketsa",
+                        "id": "/subscriptions/7c326b71-55e3-4ca7-8372-8227e1354e4c/resourceGroups/IBM-GSL-Broker-Project/providers/Microsoft.Storage/storageAccounts/saketsa13",
                         "resourceType": "Microsoft.Storage/storageAccounts",
-                        "resourceName": "saketsa"
+                        "resourceName": "saketsa13"
                     }
                 ],
-                "id": "/subscriptions/7c326b71-55e3-4ca7-8372-8227e1354e4c/resourceGroups/IBM-GSL-Broker-Project/providers/Microsoft.HDInsight/clusters/saka3vm",
+                "id": "/subscriptions/7c326b71-55e3-4ca7-8372-8227e1354e4c/resourceGroups/IBM-GSL-Broker-Project/providers/Microsoft.HDInsight/clusters/saketqawsml",
                 "resourceType": "Microsoft.HDInsight/clusters",
-                "resourceName": "saka3vm"
+                "resourceName": "saketqawsml"
             }
         ],
         "parameters": {
             "clusterName": {
                 "type": "String",
-                "value": "saka3vm"
+                "value": "saketqawsml"
             },
             "clusterLoginUserName": {
                 "type": "String",
@@ -52,7 +52,7 @@
             },
             "location": {
                 "type": "String",
-                "value": "eastus2"
+                "value": "eastasia"
             },
             "clusterVersion": {
                 "type": "String",
@@ -75,7 +75,7 @@
             },
             "storageAccountName": {
                 "type": "String",
-                "value": "saketsa"
+                "value": "saketsa13"
             },
             "storageAccountkind": {
                 "type": "String",
@@ -91,7 +91,7 @@
             },
             "workerNodeInstanceCount": {
                 "type": "Int",
-                "value": 2
+                "value": 1
             }
         },
         "mode": "Incremental"

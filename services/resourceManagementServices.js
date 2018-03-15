@@ -15,7 +15,7 @@ function loadTemplateAndDeploy(resourceClient, deploymentDetails){
         return console.error('\n\t Template file read Error: \t' + ex);
     }
 
-    console.log('\nLoaded template from template.json');
+    console.log('\nLoaded template from template.json @timestamp ->' + deploymentDetails.deploymentName);
 
     var deploymentParameters = {
       "properties": {

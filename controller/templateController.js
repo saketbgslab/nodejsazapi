@@ -54,6 +54,7 @@ function startExec(err, credentials){
     computeClient = new ComputeManagementClient(credentials, subscriptionId);
     hdinsightClient = HdinsighManagementClient.createHDInsightManagementClient(credentials, baseURI);
 
+    
    //console.log('\n\n\n\t\tCredentials' + JSON.stringify(credentials.tokenCache._entries,0,4));  
     //clssvar cre = credentials.tokenCache._entries;
     //credentials.subscriptionId = subscriptionId;
@@ -105,7 +106,7 @@ function _getResourceGroupList(subsId,callback){
         resourceClient = new ResourceManagementClient(credentials, subsId);
         console.log('\n\n\t I AM CREATING NEW RES CLIENT' );
     }
-
+   
     resourceClient.resourceGroups.list(callback);
 }
 
@@ -181,7 +182,7 @@ module.exports.templateController = function (app){
     app.get('/templateForm', urlencodedParser, function(req, res){
         async.series([
             function (callback) {
-                //Task 1: Login and Clien Setup
+                //Task 1: Login and Client Setup
                 console.log('Entered Task 1');
                 MsRest.loginWithServicePrincipalSecret(clientId, secret, domain, function (err, cred) {
                     if (err) {
@@ -190,9 +191,6 @@ module.exports.templateController = function (app){
                     process.env['CREDENTIALS'] = cred;
                     credentials = cred;
                     subscriptionClient = new SubscriptionManagementClient(credentials,baseURI ,callback);
-                    //resourceClient = new ResourceManagementClient(credentials, subscriptionId);
-                    //computeClient = new ComputeManagementClient(credentials, subscriptionId);
-                    //hdinsightClient = HdinsighManagementClient.createHDInsightManagementClient(credentials, baseURI);
                     console.log('Exiting Task 1');
                     callback(null, 'one')
                 });
@@ -318,7 +316,7 @@ module.exports.templateController = function (app){
     });
     
     app.post('/deploy-template',urlencodedParser, function(req, res){
-        console.log('\n\n\trehmhml;mlr;eh' + JSON.stringify(req.body,0,4))
+        console.log('\n\n\tList of Recieved form parameters' + JSON.stringify(req.body,0,4))
         formDetails = req.body;
         myparam = {};
         Object.keys(formDetails).forEach(function(key) {
@@ -338,7 +336,7 @@ module.exports.templateController = function (app){
 
         var deploymentDetails = {};
         deploymentDetails.resourceGroupName = myparam.resourceGroupName.value;
-        deploymentDetails.deploymentName = 'saketa4extralarge' + Date.now();
+        deploymentDetails.deploymentName = 'saketclusterdeploy' + Date.now();
         deploymentDetails.templateName = "clusterDeploy.json";
         delete myparam.resourceGroupName;
         delete myparam.subscriptionid;
@@ -349,13 +347,14 @@ module.exports.templateController = function (app){
               res.send(err);
             }
             else{
-                console.log(result);
-                fs.writeFileSync('results/HDDeployresult2.json', JSON.stringify(result, 0,4), 'utf-8');
-                res.send(result)
+                console.log('\n\n\t Deployment Result' + JSON.stringify(result,0,4));
+                //fs.writeFileSync('results/HDDeployresult2.json', JSON.stringify(result, 0,4), 'utf-8');
+                res.send(result);
             }
+            
           };
 
-          console.log('\n\n\nt---------------' + JSON.stringify(deploymentDetails.parameters,0,4));
+          console.log('\n\n\nList Deployment Parameters' + JSON.stringify(deploymentDetails.parameters,0,4));
 
           resourceManagementServices.loadTemplateAndDeploy(resourceClient, deploymentDetails);
 

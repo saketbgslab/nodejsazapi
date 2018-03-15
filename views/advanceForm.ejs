@@ -172,7 +172,8 @@ $(document).ready(function(){
                 success: function(result) {
                     alert(JSON.stringify(result,0,4))
 
-                }
+                },
+                timeout: 600000
             }).responseJSON
 
          event.preventDefault();
